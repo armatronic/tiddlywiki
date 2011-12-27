@@ -1,6 +1,18 @@
 <script type="text/javascript">
 //<![CDATA[
-if(useJavaSaver)
-	document.write("<applet style='position:absolute;left:-1px' name='TiddlySaver' code='TiddlySaver.class' archive='TiddlySaver.jar' width='1' height='1'></applet>");
+if(useJavaSaver) {
+	(function () {
+		var version = "1.5"; // java 1.5 or higher
+		var attributes = { 
+					name: 'TiddlySaver',
+			archive: 'TiddlySaver.jar',
+			code: 'TiddlySaver.class',
+			width: 1,
+			height: 1,
+					style: 'position:absolute;left:-1px'
+		};
+		deployJava.runApplet(attributes, {}, version);
+	})()
+}
 //]]>
 </script>
