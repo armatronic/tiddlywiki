@@ -57,7 +57,7 @@ public class TiddlySaver extends java.applet.Applet {
                 InputStreamReader reader =
                         isNullOrEmpty(charset)
                         ? new InputStreamReader(in)
-                        : new InputStreamReader(in, charset);
+                        : new InputStreamReader(in, fixCharsetName(charset));
                 try {
                     final char[] buff = new char[4096];
                     for (;;) {
@@ -97,7 +97,7 @@ public class TiddlySaver extends java.applet.Applet {
             try {
                 OutputStreamWriter writer = isNullOrEmpty(charset) ?
                     new OutputStreamWriter(out) :
-                    new OutputStreamWriter(out, charset);
+                    new OutputStreamWriter(out, fixCharsetName(charset));
                 try {
                     writer.write(data);
                 } finally {
@@ -380,5 +380,16 @@ public class TiddlySaver extends java.applet.Applet {
         this.filenamesRelativeToAppletDir = filenamesRelativeToAppletDir;
     }
 
-
+    /**
+     * Removes junk chars from charset name.
+     *
+     * For some reason the IcedTea plugin puts something at the end of the
+     * charset string - this removes it. (A charset name contains only
+     * alphanumeric chars and -, ., : and _)
+     * 
+     * @return String
+     */
+    public String fixCharsetName(String charset) {
+        return charset.replaceAll("[^A-Za-z0-9\\-\\.\\:\\_]", "");
+    }
 }
